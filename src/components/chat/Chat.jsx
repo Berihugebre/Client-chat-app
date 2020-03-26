@@ -42,16 +42,14 @@ const Chat = ({location})=>{
 
     useEffect(()=>{
         socket.on('message',(message)=>{
-            setMessages([...messages, message])
+            setMessages(messages => [...messages, message])
         })
-    },[messages])
 
-    //access emitted event from server
-    useEffect(()=>{
         socket.on('roomData',({users})=>{
             setUsers(users)          
         })
-    },[users])
+    },[])
+
 
     // console.log(users)
     // function for sending messages
