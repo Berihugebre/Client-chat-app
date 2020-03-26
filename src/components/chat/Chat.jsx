@@ -44,7 +44,6 @@ const Chat = ({location})=>{
     useEffect(()=>{
         socket.on('message',(message)=>{
             setMessages(messages => [...messages, message])
-            socket.off();
         })
 
         socket.on('roomData',({users})=>{
