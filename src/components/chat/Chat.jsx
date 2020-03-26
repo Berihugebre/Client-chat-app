@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import queryString from 'query-string';
 import io from 'socket.io-client';
+import {Redirect} from 'react-router-dom'
 
 import './chat.css'
 import InfoBar from '../infoBar/InfoBar';
@@ -28,9 +29,9 @@ const Chat = ({location})=>{
         setRoom(room)
 
         socket.emit('join',{name,room},(error)=>{
-            if(error){
-                alert(error)
-            }
+            if (error) {
+                return <Redirect to='/'/>
+              }
         })
         return ()=>{
             socket.emit('disconnect')
@@ -43,6 +44,7 @@ const Chat = ({location})=>{
     useEffect(()=>{
         socket.on('message',(message)=>{
             setMessages(messages => [...messages, message])
+            socket.off();
         })
 
         socket.on('roomData',({users})=>{
