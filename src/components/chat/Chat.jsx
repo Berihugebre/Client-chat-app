@@ -1,5 +1,4 @@
 import React,{useState, useEffect} from 'react'
-import queryString from 'query-string';
 import io from 'socket.io-client';
 
 import './chat.css'
@@ -10,23 +9,15 @@ import TextContainer from '../textContainer/TextContainer';
 
 let socket;
 
-const Chat = ({location})=>{
-    const [name, setName]= useState('');
-    const [room, setRoom] = useState('');
+const Chat = ({name, room})=>{
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
 
-    const ENDPOINT = 'https://b-chat-app.herokuapp.com/'
+    const ENDPOINT = 'https://b-chat-app.herokuapp.com/';
 
-    useEffect(()=>{
-        const {name, room} = queryString.parse(location.search)
-        
+    useEffect(()=>{        
         socket = io(ENDPOINT);
-        
-        setName(name);
-        setRoom(room)
-
         socket.emit('join',{name,room},(error)=>{
             if (error) {
                 alert(error)
@@ -38,7 +29,7 @@ const Chat = ({location})=>{
             //socket.off();
             socket.disconnect()
         }
-    },[ENDPOINT, location.search]);
+    },[ENDPOINT,name]);
 
     useEffect(()=>{
         socket.on('message',(message)=>{
@@ -65,7 +56,7 @@ const Chat = ({location})=>{
     return (
         <div className="outerContainer">
           <div className="container">
-              <InfoBar room={room} />
+              <InfoBar />
               <Messages messages={messages} name={name} />
               <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
           </div>

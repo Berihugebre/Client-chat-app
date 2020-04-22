@@ -7,8 +7,7 @@ const TextContainer = ({ users }) => (
   <div className="textContainer">
     <div>
       <h1>Realtime Chat Application <span role="img" aria-label="emoji">💬</span></h1>
-      <h2>Created by Berihu Gebremedhin <span role="img" aria-label="emoji">❤️</span></h2>
-      <h2>Chat me I will replay in a minute</h2>
+      <h2> Created by <a href="https://berihugebre.github.io/Portfolio/" target="_blank" rel="noopener noreferrer"> Berihu Gebremedhin</a> <span role="img" aria-label="emoji">❤️</span></h2>
     </div>
     {
       users

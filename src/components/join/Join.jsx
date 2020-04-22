@@ -1,23 +1,66 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-
+import React from 'react';
+import {Form, Button} from 'react-bootstrap';
+import { useForm } from 'react-hook-form'
 import './join.css';
 
-const Join = ()=>{
-    const [name, setName]= useState('');
-    const [room, setRoom] = useState('');
-
+const Join = ({setRoom, setName, setSignIn})=>{
+    const { register, handleSubmit, errors } = useForm();
+    const onSubmit = data => { 
+        setName(data.name)
+        setRoom(data.room)
+        setSignIn(true)
+     }
     return (
-        <div className="joinOuterContainer"> 
+        <form onSubmit={handleSubmit(onSubmit)} >
+            <div className="joinOuterContainer"> 
             <div className="joinContainer">
-                <h1 className="heading">Join</h1>
-                <div><input placeholder="name" className="JoinInput" type="text" onChange={(event)=>setName(event.target.value)}/></div>
-                <div><input placeholder="room" className="JoinInput mt-20" type="text" onChange={(event)=>setRoom(event.target.value)}/></div>
-                <Link onClick={(event)=>(!name || ! room)? event.preventDefault(): null} to={`/chat?name=${name}&room=${room}`}>
-                   <button className="button mt-20" type="submit"> Sign IN</button>
-                </Link>
+                <h1 className="heading">Chat Me</h1>
+                <Form.Group>
+                    <Form.Control
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    ref={register({ required: true })}
+                    />
+                   <span className="error"> {errors.name && 'name is required'} </span>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Control 
+                    type="password" 
+                    placeholder="password"
+                    name="room"
+                    ref={register({ required: true })}
+                    />
+                   <span className="error"> {errors.room && 'password is required'}</span>
+                </Form.Group>
+                <Button variant="primary" type="submit" className="button">
+                  Sign In
+                </Button>
             </div>
-        </div>
+           </div>
+            {/* <h1>Chat me</h1>
+            <Form.Group>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  ref={register({ required: true })}
+                />
+                {errors.name && 'name is required'}
+            </Form.Group>
+            <Form.Group>
+                <Form.Control 
+                  type="password" 
+                  placeholder="password"
+                  name="room"
+                  ref={register({ required: true })}
+                />
+                {errors.room && 'password is required'}
+            </Form.Group>
+            <Button variant="primary" type="submit">
+                Sign In
+            </Button> */}
+        </form>
     )
 }
 
