@@ -9,7 +9,6 @@ const Join = ({setRoom, setName, setSignIn})=>{
         const room = Math.random().toString(36).slice(-8);//random room
         setName(data.name)
         setRoom(room)
-        console.log(room)
         setSignIn(true)
      }
 
