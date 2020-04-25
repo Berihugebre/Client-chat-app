@@ -41,9 +41,6 @@ const Chat = ({name, room})=>{
         })
     },[])
 
-
-    // console.log(users)
-    // function for sending messages
     const sendMessage =(e)=>{
         e.preventDefault()
 
